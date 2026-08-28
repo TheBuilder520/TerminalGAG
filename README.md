@@ -3,7 +3,7 @@
 
 # Welcome to TerminalGAG!
 
-TerminalGAG is a package that I am currently working on and actively making changes to. It is not complete so there are probably bugs and other stuff missing, but I plan to make stuff in the future. TerminalGAG is based on Haxeflixel, a 2d game engine, by using states and objects.
+TerminalGAG is a package that I am currently working on and actively making changes to. It is not complete so there are probably bugs and other stuff missing, but I plan to make stuff in the future. TerminalGAG uses states and objects to make things work.
 
 ## Making your first program with TerminalGAG
 
