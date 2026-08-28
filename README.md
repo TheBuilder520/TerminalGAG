@@ -49,7 +49,7 @@ self.add(self.text)
 
 That should be everything you need for your PlayState file.
 
-Now, go back to main, import your PLayState file, and add this function:
+Now, go back to main, import your PlayState file, and add this function:
 ```
 switchStates(PlayState())
 ```
