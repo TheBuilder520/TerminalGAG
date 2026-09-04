@@ -12,9 +12,9 @@ class GAGGraphic(GAGBasic):
 
     def create(self):
         super().create()
-        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height # 
+        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height
 
     def update(self, elapsed):
         super().update(elapsed)
-        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height # hexANSI(self.color)
+        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height
                 

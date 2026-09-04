@@ -53,8 +53,8 @@ def customGradient(text, colors=[]): # TODO Ill rewrite this later to take hex c
     out.append("\033[0m")
     return "".join(out)
 
-def parseObject(object) -> list[list[str]]: # TODO Add color support
-    """Converts an object's ASCII art into a 2D Array"""
+def parseObject(object) -> list[list[str]]:
+    """Converts an object's ASCII art into a 2D Array. You can use '˳' to make transparent pixels."""
     out = []
     skip = False
     activeColor = ""
@@ -80,7 +80,10 @@ def parseObject(object) -> list[list[str]]: # TODO Add color support
                 activeColor = ""
 
             if not skip:
-                out[y].append(f"{activeColor}{char}{RESET}")
+                if char == "˳":
+                    out[y].append("")
+                else:
+                    out[y].append(f"{activeColor}{char}{RESET}")
                 # print(f"{activeColor}{char}{RESET}")
 
     #if debug: print("parsed Object")
@@ -94,7 +97,8 @@ def insertObject(object, parsedObject, plane):
     objectX = math.floor(object.x)
     for y in range(object.height):
         for x in range(len(parsedObject[0])): # FIX LATER
-            plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
+            if parsedObject[y][x] != "":
+                plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
 
 
     # print(plane)

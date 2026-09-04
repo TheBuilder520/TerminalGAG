@@ -15,8 +15,8 @@ startingScreen = True
 
 # The plane is space objects can take up. For example, you can make it bigger than the screen size and move the camera to build a full level of something or a side scroller.
 
-planeHeight = 50
-planeWidth = 200
+planeHeight = 40
+planeWidth = 160
 
 debug = False
 
