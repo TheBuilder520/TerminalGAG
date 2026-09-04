@@ -1,4 +1,4 @@
-from terminalGAG.GAGScreen import GAGScreen # packages are weird
+from TerminalGAG.GAGScreen import GAGScreen # packages are weird
 
 from . import *
 from .GAGState import *
