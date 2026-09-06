@@ -9,14 +9,12 @@ class GAGPhysics(GAGBasic):
         self.velocityY = 0
         self.friction = 0.01
         self.airResistance = 0.1
-        self.decimalY = x
-        self.decimalX = y
         self.onGround = False
 
 
     def update(self, elapsed):
-        self.decimalY += self.velocityY * elapsed
-        self.decimalX += self.velocityX * elapsed
+        self.y += self.velocityY * elapsed
+        self.x += self.velocityX * elapsed
 
         if self.onGround:
             self.velocityX *= self.friction**elapsed
@@ -25,10 +23,6 @@ class GAGPhysics(GAGBasic):
             self.velocityX *= self.airResistance**elapsed
             self.velocityY *= self.airResistance**elapsed
             
-            
-
-        self.y = math.floor(self.decimalY)
-        self.x = math.floor(self.decimalX)
         # print(self.decimalY, self.decimalX)
         super().update(elapsed)
 

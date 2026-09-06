@@ -24,7 +24,7 @@ def trueLen(text:str): # TODO Ill work on this later
 
     return out
 
-def hexANSI(hex:str="#000000"): # hex to ANSI
+def hexANSI(hex:str="#000000", foreGround=False): # hex to ANSI
     """Converts a hex code into a color code. (Keep in mind that a true color spectrum is not supported by all systems.)"""
     if hex[0] != "#": raise TypeError("Invalid hex code! Did you perhaps forget a '#'?")
     try:
@@ -34,7 +34,22 @@ def hexANSI(hex:str="#000000"): # hex to ANSI
     except:
         raise Exception(f"Invalid hex code! Expected format '#rrggbb' got '{hex}'.")
 
-    return f"\033[38;2;{r};{g};{b}m"
+    if foreGround:
+        return f"\033[48;2;{r};{g};{b}m"
+    else:
+        return f"\033[38;2;{r};{g};{b}m"
+
+def hexTuple(hex:str="#000000"): # hex to ANSI
+    """Converts a hex code into a tuple (r, g, b). (Keep in mind that a true color spectrum is not supported by all systems.)"""
+    if hex[0] != "#": raise TypeError("Invalid hex code! Did you perhaps forget a '#'?")
+    try:
+        r = int(hex[1:3], 16)
+        g = int(hex[3:5], 16)
+        b = int(hex[5:7], 16)
+    except:
+        raise Exception(f"Invalid hex code! Expected format '#rrggbb' got '{hex}'.")
+
+    return (r, g, b)
 
 def customGradient(text, colors=[]): # TODO Ill rewrite this later to take hex codes.
     """Returns a string with color codes for gradients."""
@@ -97,10 +112,21 @@ def insertObject(object, parsedObject, plane):
     objectX = math.floor(object.x)
     for y in range(object.height):
         for x in range(len(parsedObject[0])): # FIX LATER
-            if parsedObject[y][x] != "":
-                plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
+            try:
+                if parsedObject[y][x] != "":
+                    plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
+            except:
+                raise Exception(f"Something went wrong. The trouble spot was on {object} with line {parsedObject[y]}")
 
 
     # print(plane)
 
     #if debug: print("Inserted Object")
+
+def generatePlane(width, height, fillChar=" "):
+    plane = []
+    for y in range(height):
+        plane.append([])
+        for x in range(width):
+            plane[y].append(fillChar)
+    return plane

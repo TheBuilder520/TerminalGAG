@@ -70,6 +70,7 @@ class GAGState:
 
     def remove(self, object:GAGBasic):
         self.objects.remove(object)
+        object.destroy()
 
     def generatePlane(self, width, height):
         """Generates the physical space objects can appear on"""
