@@ -21,6 +21,7 @@ class GAGKeyboard:
         self.UP = False
         self.DOWN = False
         self.ENTER = False
+        self.SPACE = False
 
     def update(self, elapsed):
         match self.rawKey:
@@ -34,12 +35,15 @@ class GAGKeyboard:
                 self.DOWN = True
             case "enter":
                 self.ENTER = True
+            case "space":
+                self.SPACE = True
             case _:
                 self.LEFT = False
                 self.RIGHT = False
                 self.UP = False
                 self.DOWN = False
                 self.ENTER = False
+                self.SPACE = False
 
         self.rawKey = None
 
@@ -77,7 +81,7 @@ class GAGKeyboard:
                     
                     if key.event_type == keyboard.KEY_DOWN and key.name != None:
                         actualKey = key.name
-                        if actualKey == "enter": input() #prevents 
+                        if actualKey == "enter": input() #prevents accidental command executing
                         if actualKey != None: self.rawKey = actualKey
         except KeyboardInterrupt:
             pass

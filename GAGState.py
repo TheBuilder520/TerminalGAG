@@ -9,6 +9,7 @@ from .config import *
 from .utils import *
 from .objects.GAGText import *
 from time import sleep
+import sys
 
 # global to allow for previous states to be destroyed
 currentState = None
@@ -101,6 +102,8 @@ def switchStates(newState:GAGState):
             elapsed = time.time() - lastTime
             lastTime = time.time()
             currentState.update(elapsed)
+
+        sys.stdout.write(f"\033[{screenHeight};0H")
     else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
         if currentState != None:
             inState = False

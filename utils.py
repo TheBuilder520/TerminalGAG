@@ -116,8 +116,7 @@ def insertObject(object, parsedObject, plane):
                 if parsedObject[y][x] != "":
                     plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
             except:
-                raise Exception(f"Something went wrong. The trouble spot was on {object} with line {parsedObject[y]}")
-
+                 plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = " "
 
     # print(plane)
 
