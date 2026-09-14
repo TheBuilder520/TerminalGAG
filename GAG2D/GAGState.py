@@ -2,18 +2,16 @@
 
 import time
 from .GAGBasic import *
-from .GAGKeys import *
+from ..GAGKeys import *
 from .GAGCamera import *
-from .startUp import *
-from .config import *
-from .utils import *
+from ..startUp import *
+from ..config import *
+from ..utils import *
 from .objects.GAGText import *
 from time import sleep
 import sys
 
-# global to allow for previous states to be destroyed
-currentState = None
-inState = False
+
 
 class GAGState:
     def __init__(self, width=planeWidth, height=planeHeight):
@@ -84,36 +82,3 @@ class GAGState:
             for x in range(width):
                 plane[y].append(" ")
         return plane
-        
-def switchStates(newState:GAGState):
-    if debug: print("Switching states")
-    global inState
-    global currentState
-    if not inState: # Check to see if a state is already active
-        currentState = newState
-
-        inState = True
-
-        newState.create()
-
-        lastTime = time.time()
-
-        while currentState.running & (currentState != None):
-            elapsed = time.time() - lastTime
-            lastTime = time.time()
-            currentState.update(elapsed)
-
-        sys.stdout.write(f"\033[{screenHeight};0H")
-    else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
-        if currentState != None:
-            inState = False
-            currentState.destroy()   
-            currentState = None
-        
-        currentState = newState
-
-        currentState.create()
-
-        inState = True
-
-    

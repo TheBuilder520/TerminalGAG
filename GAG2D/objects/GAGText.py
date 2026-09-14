@@ -1,5 +1,5 @@
 from ..GAGBasic import *
-from ..utils import *
+from ...utils import *
 
 class GAGText(GAGBasic):
     def __init__(self, x=0, y=0, text=""):

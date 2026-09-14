@@ -13,16 +13,31 @@ screenWidth = 160
 
 startingScreen = True
 
-# The plane is space objects can take up. For example, you can make it bigger than the screen size and move the camera to build a full level of something or a side scroller.
+# The plane is the 2D space objects can take up. For example, you can make it bigger than the screen size and move the camera to build a full level of something or a side scroller.
 
 planeHeight = 40
 planeWidth = 160
 
-debug = False
+# The space is the 3D area objects can take up. For example, you can make it bigger than the screen size and move the camera to build a full level of something or a side scroller.
 
-FPSCounter = True
+spaceHeight = 40
+spaceWidth = 160
+spaceDepth = 5
+
+# Determines how deep into 3D space you want to render from the camera (The more depth you add, the more processing power required.)
+
+renderingDepth = 5
+
+# Changes the constant for the camera's scroll factor for the depth of a space
+
+depthFactorX = 0
+depthFactorY = 1
 
 # 0 = None
 # WARNING! More FPS makes boot up of the Keyboard detector take longer for some reason.
 # Does not account for processing time.
 FPSLimit = 60
+
+debug = True
+
+FPSCounter = True

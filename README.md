@@ -16,8 +16,8 @@ Then, you would want to create a new file calling it 'PlayState.py'. This file w
 Inside of your Playstate.py, add these 2 lines of code:
 
 ```
-from TerminalGAG.GAGState import * 
-from TerminalGAG.objects.GAGText import *
+from TerminalGAG.GAG2D.GAGState import * 
+from TerminalGAG.GAG2D.objects.GAGText import *
 ```
 
 These 2 lines import the state class and the text object.

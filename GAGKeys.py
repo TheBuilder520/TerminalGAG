@@ -48,7 +48,7 @@ class GAGKeyboard:
         self.rawKey = None
 
     def keyPress(self):
-        from .GAGState import inState # prevents circular imports
+        from .GAG2D.GAGState import inState # prevents circular imports
         try:
             while inState or not self.stop:
                 if os.name == "posix":

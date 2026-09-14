@@ -1,7 +1,7 @@
 from .GAGBasic import *
 from .objects.GAGText import *
-from .config import *
-from .utils import *
+from ..config import *
+from ..utils import *
 
 import sys
 import os

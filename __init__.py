@@ -1,7 +1,7 @@
 from TerminalGAG.GAGScreen import GAGScreen # packages are weird
 
 from . import *
-from .GAGState import *
+from .utils import *
 import sys
 
 sys.stdout.write("\033[?25l")
