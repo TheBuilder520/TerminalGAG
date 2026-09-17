@@ -32,6 +32,7 @@ renderingDepth = 5
 
 depthFactorX = 0
 depthFactorY = 1
+brightnessFactor = 0.5
 
 # 0 = None
 # WARNING! More FPS makes boot up of the Keyboard detector take longer for some reason.

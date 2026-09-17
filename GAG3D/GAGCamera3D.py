@@ -59,7 +59,7 @@ class GAGCamera3D(GAGBasic3D):
                 for x in range(self.width):
                     #scrollDepthX *= x
                     if self.state.space[int((self.spaceZ + z) % self.state.depth)][int(((self.spaceY + y)+scrollDepthY) % self.state.height)][int(((self.spaceX + x)+scrollDepthX) % self.state.width)] != " ":
-                        self.screen.screen[y+self.y][x+self.x] = hexANSI(brightness(self.state.colorMap[int((self.spaceZ + z) % self.state.depth)][int(((self.spaceY + y)+scrollDepthY) % self.state.height)][int(((self.spaceX + x)+scrollDepthX) % self.state.width)], 1/(z+1))) + self.state.space[int((self.spaceZ + z) % self.state.depth)][int(((self.spaceY + y)+scrollDepthY) % self.state.height)][int(((self.spaceX + x)+scrollDepthX) % self.state.width)] 
+                        self.screen.screen[y+self.y][x+self.x] = hexANSI(brightness(self.state.colorMap[int((self.spaceZ + z) % self.state.depth)][int(((self.spaceY + y)+scrollDepthY) % self.state.height)][int(((self.spaceX + x)+scrollDepthX) % self.state.width)], 1/((z+1)*brightnessFactor))) + self.state.space[int((self.spaceZ + z) % self.state.depth)][int(((self.spaceY + y)+scrollDepthY) % self.state.height)][int(((self.spaceX + x)+scrollDepthX) % self.state.width)] 
 
         for object in self.hud: 
             object.update(elapsed)
