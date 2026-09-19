@@ -2,6 +2,7 @@
 
 import time
 from .GAGBasic import *
+from ..GAGFunction import *
 from ..GAGKeys import *
 from .GAGCamera import *
 from ..startUp import *
@@ -19,6 +20,7 @@ class GAGState:
         self.objects = []
         self.plane = self.generatePlane(width, height)
         self.camera = GAGCamera(mainScreen, self)
+        self.__runningFunctions:list[GAGFunction] = []
         if debug: print("State initialized")
 
     def __str__(self):
@@ -50,6 +52,12 @@ class GAGState:
                 insertObject(object, parsedObject, self.plane)
                 #if debug: print(parsedObject)
 
+        for function in self.__runningFunctions:
+            function.update(elapsed)
+
+            if not function.isRunning():
+                self.__runningFunctions.remove(function)
+
         if self.camera.objectLink != None:
             self.camera.planeX = self.camera.objectLink.x + self.camera.linkOffsetX
             self.camera.planeY = self.camera.objectLink.y + self.camera.linkOffsetY
@@ -66,6 +74,11 @@ class GAGState:
         """Adds an object to the state."""
         object.create()
         self.objects.append(object)
+
+    def call(self, function:GAGFunction):
+        """Adds an object to the state."""
+        function.create()
+        self.__runningFunctions.append(function)
 
     def remove(self, object:GAGBasic):
         self.objects.remove(object)

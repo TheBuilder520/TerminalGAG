@@ -2,6 +2,7 @@
 
 import time
 from .GAGBasic3D import *
+from ..GAGFunction import *
 from ..GAGKeys import *
 from .GAGCamera3D import *
 from ..startUp import *
@@ -14,6 +15,7 @@ class GAGState3D:
     def __init__(self, width=spaceWidth, height=spaceHeight, depth=spaceDepth):
         self.running = True
         self.objects = []
+        self.__runningFunctions = []
         self.space = self.generateSpace(width, height, depth)
         self.colorMap = self.generateSpace(width, height, depth) # Stores all colors in hex value to be later processed for depth effect
         self.camera = GAGCamera3D(mainScreen, self)
@@ -48,6 +50,9 @@ class GAGState3D:
                 insert3DObject(object, self.space, self.colorMap)
                 #if debug: print(parsedObject)
 
+        for function in self.__runningFunctions:
+            function.update()
+
         if self.camera.objectLink != None:
             self.camera.planeX = self.camera.objectLink.x + self.camera.linkOffsetX
             self.camera.planeY = self.camera.objectLink.y + self.camera.linkOffsetY
@@ -69,6 +74,11 @@ class GAGState3D:
     def remove(self, object:GAGBasic):
         self.objects.remove(object)
         object.destroy()
+
+    def call(self, function:GAGFunction):
+        """Adds an object to the state."""
+        function.create()
+        self.__runningFunctions.append(function)
 
     def generateSpace(self, width, height, depth): # You've heard of 2d arrays before, now may I introduce 3D ARRAYS
         """Generates the physical space objects can appear on"""
