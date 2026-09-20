@@ -130,7 +130,7 @@ def insertObject(object, parsedObject, plane):
     objectY = math.floor(object.y)
     objectX = math.floor(object.x)
     for y in range(object.height):
-        for x in range(len(parsedObject[0])): # FIX LATER
+        for x in range(len(parsedObject[y])): # FIX LATER
             try:
                 if parsedObject[y][x] != "":
                     plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]

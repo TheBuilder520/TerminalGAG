@@ -16,12 +16,40 @@ class GAGKeyboard:
         self.keyboardThread = threading.Thread(target=self.keyPress, daemon=True)
         self.keyboardThread.start()
         self.rawKey = None
+        
         self.LEFT = False
         self.RIGHT = False
         self.UP = False
         self.DOWN = False
         self.ENTER = False
         self.SPACE = False
+
+        self.A = False
+        self.B = False
+        self.C = False
+        self.D = False
+        self.E = False
+        self.F = False
+        self.G = False
+        self.H = False
+        self.I = False
+        self.J = False
+        self.K = False
+        self.L = False
+        self.M = False
+        self.N = False
+        self.O = False
+        self.P = False
+        self.Q = False
+        self.R = False
+        self.S = False
+        self.T = False
+        self.U = False
+        self.V = False
+        self.W = False
+        self.X = False
+        self.Y = False
+        self.Z = False
 
     def update(self, elapsed):
         match self.rawKey:
@@ -37,6 +65,58 @@ class GAGKeyboard:
                 self.ENTER = True
             case "space":
                 self.SPACE = True
+            case "a":
+                self.A = True
+            case "b":
+                self.B = True
+            case "c":
+                self.C = True
+            case "d":
+                self.D = True
+            case "e":
+                self.E = True
+            case "f":
+                self.F = True
+            case "g":
+                self.G = True
+            case "h":
+                self.H = True
+            case "i":
+                self.I = True
+            case "j":
+                self.J = True
+            case "k":
+                self.K = True
+            case "l":
+                self.L = True
+            case "m":
+                self.M = True
+            case "n":
+                self.N = True
+            case "o":
+                self.O = True
+            case "p":
+                self.P = True
+            case "q":
+                self.Q = True
+            case "r":
+                self.R = True
+            case "s":
+                self.S = True
+            case "t":
+                self.T = True
+            case "u":
+                self.U = True
+            case "v":
+                self.V = True
+            case "w":
+                self.W = True
+            case "x":
+                self.X = True
+            case "y":
+                self.Y = True
+            case "z":
+                self.Z = True
             case _:
                 self.LEFT = False
                 self.RIGHT = False
@@ -44,6 +124,33 @@ class GAGKeyboard:
                 self.DOWN = False
                 self.ENTER = False
                 self.SPACE = False
+
+                self.A = False
+                self.B = False
+                self.C = False
+                self.D = False
+                self.E = False
+                self.F = False
+                self.G = False
+                self.H = False
+                self.I = False
+                self.J = False
+                self.K = False
+                self.L = False
+                self.M = False
+                self.N = False
+                self.O = False
+                self.P = False
+                self.Q = False
+                self.R = False
+                self.S = False
+                self.T = False
+                self.U = False
+                self.V = False
+                self.W = False
+                self.X = False
+                self.Y = False
+                self.Z = False
 
         self.rawKey = None
 
