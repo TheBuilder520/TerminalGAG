@@ -57,6 +57,7 @@ class GAGState:
 
             if not function.isRunning():
                 self.__runningFunctions.remove(function)
+                function.destroy()
 
         if self.camera.objectLink != None:
             self.camera.planeX = self.camera.objectLink.x + self.camera.linkOffsetX
