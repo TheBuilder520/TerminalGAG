@@ -10,6 +10,10 @@ class GAGTimer(GAGFunction):
         super().update(elapsed)
         self.__duration += elapsed
 
+    def destroy(self):
+        super().destroy()
+        self.stop()
+
     def reset(self):
         self.__duration = 0
 
@@ -21,3 +25,6 @@ class GAGTimer(GAGFunction):
 
     def getDuration(self):
         return self.__duration
+
+    def getLength(self):
+        return self.__length
