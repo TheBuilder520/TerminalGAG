@@ -7,10 +7,12 @@ import sys
 try:
     import keyboard
     import pytweening
+    import pyautogui
 except:
     from os import system
     system("pip install keyboard")
     system("pip install pytweening")
+    system("pip install pyautogui")
 
 sys.stdout.write("\033[?25l")
 

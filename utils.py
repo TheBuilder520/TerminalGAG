@@ -266,6 +266,8 @@ def switchStates(newState):
             lastTime = time.time()
             currentState.update(elapsed)
 
+        inState = False
+
         sys.stdout.write(f"\033[{screenHeight};0H")
     else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
         if currentState != None:

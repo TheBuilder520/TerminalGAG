@@ -3,6 +3,7 @@
 import os
 import threading
 import keyboard
+import pyautogui
 if os.name != "nt":
     import termios
     import tty
@@ -50,6 +51,16 @@ class GAGKeyboard:
         self.X = False
         self.Y = False
         self.Z = False
+
+        if os.name != "posix":
+            self.mouseX = 0
+            self.mouseY = 0
+
+            self.mouseLeft = False
+            self.mouseRight = False
+            self.mouseMiddle = False
+
+            self.mouseScroll = 0
 
     def update(self, elapsed):
         match self.rawKey:
@@ -154,6 +165,8 @@ class GAGKeyboard:
 
         self.rawKey = None
 
+        self.mouseX, self.mouseY = pyautogui.position()
+
     def keyPress(self):
         from .GAG2D.GAGState import inState # prevents circular imports
         try:
@@ -188,7 +201,7 @@ class GAGKeyboard:
                     
                     if key.event_type == keyboard.KEY_DOWN and key.name != None:
                         actualKey = key.name
-                        if actualKey == "enter": input() #prevents accidental command executing
+                        #if actualKey == "enter": input() #prevents accidental command executing
                         if actualKey != None: self.rawKey = actualKey
         except KeyboardInterrupt:
             pass

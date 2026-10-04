@@ -38,6 +38,12 @@ class GAGTween(GAGFunction):
             self.__totalElapsed = self.__timeToComplete
             self.value = 1
 
+    def isComplete(self):
+        if (self.__t > 1 and not self.reverse) or (self.__t < 0 and self.reverse):
+            return True
+        else:
+            return False
+
     def __getType(self, type):
         match(type):
             case "linear":
