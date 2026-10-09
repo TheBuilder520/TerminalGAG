@@ -43,3 +43,5 @@ class GAGSprite(GAGBasic):
         if self.__timer.isComplete():
             self.__currentFrame += 1
             self.__timer.reset()
+
+            self.object = self.__graphic[self.__animationDict[self.__currentAnimation[self.__currentFrame]]]
