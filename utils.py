@@ -214,6 +214,7 @@ def insert3DObject(object, space, colorMap):
     #if debug: print("Inserted Object")
 
 def generatePlane(width, height, fillChar=" "):
+    """Generates the physical space objects can appear on"""
     plane = []
     for y in range(height):
         plane.append([])
