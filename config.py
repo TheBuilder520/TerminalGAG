@@ -18,8 +18,8 @@ startingScreen = True
 # planeHeight = 40
 # planeWidth = 160
 
-planeHeight = 40
-planeWidth = 160
+planeHeight = 200
+planeWidth = 400
 
 # The space is the 3D area objects can take up. For example, you can make it bigger than the screen size and move the camera to build a full level of something or a side scroller.
 # default: 
@@ -53,4 +53,4 @@ FPSLimit = 60
 
 debug = False
 
-FPSCounter = False
+FPSCounter = True
