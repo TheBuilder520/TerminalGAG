@@ -35,7 +35,7 @@ class PlayState(GAGState):
 
 This will be the start of every state you make.
 
-Next thing you need is a text object. You can do that by adding these 2 lines in the create method after the super call.
+Next thing you need is a text object. You can do that by adding this line in the create method after the super call.
 
 ```
 self.text = GAGText(1, 1, "Hello World!") # The variables are x, y, text

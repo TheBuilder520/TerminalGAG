@@ -2,32 +2,37 @@ from ..GAGBasic import *
 from ...utils import *
 from ...GAGTimer import *
 
+# This will probably be the most useful and most used object
+
 class GAGSprite(GAGBasic):
-    def __init__(self, x, y):
+    def __init__(self, x=0, y=0):
+        super().__init__()
         self.x = x
         self.y = y
         self.FPS = 24
         self.__animationDict = {}
         self.__graphic = []
-        self.__currentAnimation = None
-        self.__totalElapsed = 0
+        self.currentAnimation = None
+        self.__idleAnimation = ""
         self.__numFrames = 0
         self.__currentFrame = 0
         self.__timer = GAGTimer(1/self.FPS)
 
     def loadGraphic(self, graphicList=[" "]):
         self.__graphic = graphicList
+        self.object = self.__graphic[0]
         self.width = len(graphicList[0].split("\n")[0])
         self.height = len(graphicList[0].split("\n"))
 
-    def addAnimation(self, animationName="None", frameNumbers=[0]):
-        self.__animationDict.update({animationName:frameNumbers})
+    def addAnimation(self, animationName="None", frameNumbers=[0], loop=False):
+        self.__animationDict.update({animationName:[frameNumbers, loop]})
 
-    def playAnimation(self, animationName):
-        self.__currentAnimation = animationName
+    def playAnimation(self, animationName:str):
+        self.__currentFrame = 0
+        self.currentAnimation = animationName
         try: 
-            self.object = self.__animationDict[animationName][0]
-            self.__numFrames = len(self.__animationDict[animationName])
+            self.object = self.__graphic[self.__animationDict[animationName][0][0]]
+            self.__numFrames = len(self.__animationDict[animationName][0])
             self.__timer.reset()
         except: self.object = f"{hexANSI("#ff0000")}ERROR!"
 
@@ -40,8 +45,19 @@ class GAGSprite(GAGBasic):
 
         if self.__timer.getLength() != 1/self.FPS: self.__timer.setLength(1/self.FPS)
 
-        if self.__timer.isComplete():
+        if self.__timer.isComplete() and (self.currentAnimation != None):
             self.__currentFrame += 1
             self.__timer.reset()
 
-            self.object = self.__graphic[self.__animationDict[self.__currentAnimation[self.__currentFrame]]]
+            self.object = self.__graphic[self.__animationDict[self.currentAnimation][0][self.__currentFrame]]
+
+            if self.__currentFrame+1 == self.__numFrames and not self.__animationDict[self.currentAnimation][1]:
+                self.currentAnimation = None 
+
+                self.__currentFrame = 0
+
+                if self.__idleAnimation != "":
+                    self.playAnimation(self.__idleAnimation)
+
+            if self.__currentFrame+1 == self.__numFrames and self.__animationDict[self.currentAnimation][1]:
+                self.__currentFrame = -1

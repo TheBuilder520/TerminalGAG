@@ -2,13 +2,13 @@ from .GAGFunction import *
 import pytweening
 
 class GAGTween(GAGFunction):
-    def __init__(self, tweenType="linear", time=1.0, reverse=False):
+    def __init__(self, ease="linear", time=1.0, reverse=False):
         super().__init__()
         self.value = 0
         self.__t = 0
         self.__timeToComplete = time
         self.__totalElapsed = 0
-        self.__type = self.__getType(tweenType)
+        self.__type = self.__getType(ease)
 
         self.reverse = reverse
 

@@ -1,3 +1,5 @@
+"""TerminalGAG is a graphics engine that can be used to display data or write games inside of a terminal. There are a lot of modules and objects to help you build whatever you dream of inside of python."""
+
 from TerminalGAG.GAGScreen import GAGScreen # packages are weird
 
 from . import *
