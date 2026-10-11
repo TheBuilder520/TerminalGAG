@@ -53,4 +53,4 @@ FPSLimit = 60
 
 debug = False
 
-FPSCounter = True
+FPSCounter = False
