@@ -10,6 +10,9 @@ class GAGSprite(GAGBasic):
         self.x = x
         self.y = y
         self.FPS = 24
+        self.color = "#ffffff"
+        self.updateOnColorChange = True
+        self.__lastColor = self.color
         self.__animationDict = {}
         self.__graphic = []
         self.currentAnimation = None
@@ -20,7 +23,7 @@ class GAGSprite(GAGBasic):
 
     def loadGraphic(self, graphicList=[" "]):
         self.__graphic = graphicList
-        self.object = self.__graphic[0]
+        self.object = hexANSI(self.color) + self.__graphic[0]
         self.width = len(graphicList[0].split("\n")[0])
         self.height = len(graphicList[0].split("\n"))
 
@@ -31,7 +34,7 @@ class GAGSprite(GAGBasic):
         self.__currentFrame = 0
         self.currentAnimation = animationName
         try: 
-            self.object = self.__graphic[self.__animationDict[animationName][0][0]]
+            self.object = hexANSI(self.color) + self.__graphic[self.__animationDict[animationName][0][0]]
             self.__numFrames = len(self.__animationDict[animationName][0])
             self.__timer.reset()
         except: self.object = f"{hexANSI("#ff0000")}ERROR!"
@@ -43,13 +46,17 @@ class GAGSprite(GAGBasic):
         super().update(elapsed)
         self.__timer.update(elapsed)
 
+        if self.__lastColor != self.color and self.updateOnColorChange:
+            self.object = hexANSI(self.color) + self.__graphic[0]
+            self.__lastColor = self.color
+
         if self.__timer.getLength() != 1/self.FPS: self.__timer.setLength(1/self.FPS)
 
         if self.__timer.isComplete() and (self.currentAnimation != None):
             self.__currentFrame += 1
             self.__timer.reset()
 
-            self.object = self.__graphic[self.__animationDict[self.currentAnimation][0][self.__currentFrame]]
+            self.object = hexANSI(self.color) + self.__graphic[self.__animationDict[self.currentAnimation][0][self.__currentFrame]]
 
             if self.__currentFrame+1 == self.__numFrames and not self.__animationDict[self.currentAnimation][1]:
                 self.currentAnimation = None 

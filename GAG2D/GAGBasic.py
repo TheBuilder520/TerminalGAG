@@ -13,7 +13,7 @@ class GAGBasic:
 
     def __str__(self):
         """Returns the object name"""
-        return self.__class__.__name__
+        return self.object
 
     def create(self):
         """Called when the object is created"""
