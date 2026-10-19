@@ -54,3 +54,5 @@ FPSLimit = 60
 debug = False
 
 FPSCounter = False
+
+doSplash = False

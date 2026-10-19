@@ -70,9 +70,10 @@ def hexTuple(hex:str="#000000"): # hex to ANSI
 
     return (r, g, b)
 
-def customGradient(text, colors=[]): # TODO Ill rewrite this later to take hex codes.
+def customGradient(text, hex=[]):
     """Returns a string with color codes for gradients."""
     out = []
+    colors = [hexTuple(h) for h in hex]
     textLength = len(text)
     colorLength = len(colors)
     splitText = []
@@ -82,7 +83,10 @@ def customGradient(text, colors=[]): # TODO Ill rewrite this later to take hex c
 
     for i, part in enumerate(splitText):
         for color, letter in enumerate(part):
-            out.append(f"\033[38;2;{round((colors[i][0]+((colors[i+1][0]-colors[i][0])/len(part))*color))};{round((colors[i][1]+((colors[i+1][1]-colors[i][1])/len(part))*color))};{round((colors[i][2]+((colors[i+1][2]-colors[i][2])/len(part))*color))}m{letter}")
+            r = round((colors[i][0]+((colors[i+1][0]-colors[i][0])/len(part))*color))
+            g = round((colors[i][1]+((colors[i+1][1]-colors[i][1])/len(part))*color))
+            b = round((colors[i][2]+((colors[i+1][2]-colors[i][2])/len(part))*color))
+            out.append(f"\033[38;2;{r};{g};{b}m{letter}")
 
     out.append("\033[0m")
     return "".join(out)

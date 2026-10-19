@@ -2,12 +2,13 @@
 
 import os
 import threading
+import mouse
 import keyboard
-import pyautogui
 if os.name != "nt":
     import termios
     import tty
 import sys
+from .Window import TerminalWindow
 
 # TODO add the rest of the keyboard
 
@@ -24,6 +25,7 @@ class GAGKeyboard:
         self.DOWN = False
         self.ENTER = False
         self.SPACE = False
+        self.BACKSPACE = False
 
         self.A = False
         self.B = False
@@ -53,12 +55,17 @@ class GAGKeyboard:
         self.Z = False
 
         if os.name != "posix":
+            self.__window = TerminalWindow()
+            
             self.mouseX = 0
             self.mouseY = 0
 
             self.mouseLeft = False
             self.mouseRight = False
             self.mouseMiddle = False
+            mouse.on_click(self.__leftClick)
+            mouse.on_right_click(self.__rightClick)
+            mouse.on_middle_click(self.__middleClick)
 
             self.mouseScroll = 0
 
@@ -76,6 +83,8 @@ class GAGKeyboard:
                 self.ENTER = True
             case "space":
                 self.SPACE = True
+            case "backspace":
+                self.BACKSPACE = True
             case "a":
                 self.A = True
             case "b":
@@ -135,6 +144,7 @@ class GAGKeyboard:
                 self.DOWN = False
                 self.ENTER = False
                 self.SPACE = False
+                self.BACKSPACE = False
 
                 self.A = False
                 self.B = False
@@ -165,7 +175,32 @@ class GAGKeyboard:
 
         self.rawKey = None
 
-        self.mouseX, self.mouseY = pyautogui.position()
+        if os.name != "posix":
+            self.__window.update(elapsed)
+
+            tempMouseX, tempMouseY = mouse.get_position()
+
+            titlebarOffset = 40
+
+            characterSizeX = self.__window.width//os.get_terminal_size().columns
+            characterSizeY = (self.__window.height-titlebarOffset)//os.get_terminal_size().lines
+
+            if (tempMouseX > self.__window.x and tempMouseX < self.__window.x + self.__window.width) and (tempMouseY > self.__window.y+titlebarOffset and tempMouseY < self.__window.y + self.__window.height): # detects to see if the mouse is on the window.
+                self.mouseX = (tempMouseX - self.__window.x - (characterSizeX*1.5))//characterSizeX
+                self.mouseY = (tempMouseY - self.__window.y - (characterSizeY*4.5) + titlebarOffset)//characterSizeY # subtract an extra 30 to account for the title bar. 
+
+                self.mouseScroll = mouse.WheelEvent.delta
+                
+            self.mouseLeft = False
+            self.mouseRight = False
+            self.mouseMiddle = False
+
+    def __leftClick(self):
+        self.mouseLeft = True
+    def __rightClick(self):
+        self.mouseLeft = True
+    def __middleClick(self):
+        self.mouseLeft = True
 
     def keyPress(self):
         from .GAG2D.GAGState import inState # prevents circular imports
