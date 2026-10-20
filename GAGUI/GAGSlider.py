@@ -1,8 +1,9 @@
 from .GAGBasicUI import *
 from ..utils import *
+from .styles.roundedStyle import *
 
 class GAGSlider(GAGBasicUI):
-    def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, min=0 ,max=1, text="button"):
+    def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, min=0 ,max=1, text="button", style=RoundedStyle()):
         super().__init__()
         self.x = x
         self.y = y
@@ -11,13 +12,18 @@ class GAGSlider(GAGBasicUI):
         self.text = text
         self.sliderWidth = width
         self.sliderPos = 0
-        self.width = width if len(text) <= width else len(text)
+        self.width = width + len(text)
         self.height = 1
-        self.value = 0
-        self.min = min
-        self.max = max
-        self.color = "#ffffff"
-        self.startPosition = 0
+        self.minNum = min
+        self.maxNum = max
+        self.value = (self.maxNum-self.minNum)/self.sliderWidth * (self.sliderPos)
+        self.__lastValue = self.value
+        self.colorL = "#ffffff"
+        self.colorR = "#696969"
+        self.colorKnob = "#ffffff"
+        self.colorText = "#ffffff"
+        self.style = style
+        self.selectPosition = 0
         self.__checkNext = True
 
     def create(self, state):
@@ -28,7 +34,15 @@ class GAGSlider(GAGBasicUI):
         super().update(elapsed)
         self.object = str(self)
 
+        if self.__lastValue != self.value:
+            self.sliderPos = round((self.value * self.sliderWidth) / (self.maxNum - self.minNum))
+            self.__lastValue = self.value
+
         if self.selected:
+            if self.state.GAGKeyboard.LEFT and self.sliderPos != 0:
+                self.sliderPos -= 1
+            if self.state.GAGKeyboard.RIGHT and self.sliderPos != self.sliderWidth:
+                self.sliderPos += 1
             if self.state.GAGKeyboard.BACKSPACE:
                 self.selected = False
                 self.state.inMenu = True
@@ -37,10 +51,7 @@ class GAGSlider(GAGBasicUI):
                 self.selected = False
                 self.state.inMenu = True
                 self.__checkNext = False
-            if self.state.GAGKeyboard.LEFT and self.sliderPos != 0:
-                self.sliderPos -= 1
-            if self.state.GAGKeyboard.RIGHT and self.sliderPos != self.sliderWidth:
-                self.sliderPos += 1
+                self.value = (self.maxNum-self.minNum)/self.sliderWidth * (self.sliderPos)
 
 
     def onSelect(self):
@@ -51,10 +62,10 @@ class GAGSlider(GAGBasicUI):
         else:
             self.__checkNext = True
 
-    def __str__(self):
+    def __str__(self): # I HOPE YOU LIKE F-STRINGS
         if self.selected:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{'─'*self.sliderPos}{hexANSI("#ffffff")}█{hexANSI(brightness(self.color, 0.5))}{'─'*(self.sliderWidth-self.sliderPos)} {self.text}"""
+            return f"{hexANSI(brightness(self.colorL, 0.5))}{self.style.line*self.sliderPos}{hexANSI(self.colorKnob)}{self.style.knob}{hexANSI(brightness(self.colorR, 0.5))}{self.style.line*(self.sliderWidth-self.sliderPos)} {hexANSI(self.colorText)}{self.text}"
         elif self.hovering:
-            return f"""{hexANSI(self.color)}{'─'*self.sliderPos}█{'─'*(self.sliderWidth-self.sliderPos)} {self.text}"""
+            return f"{hexANSI(self.colorL)}{self.style.line*self.sliderPos}{hexANSI(self.colorKnob)}{self.style.knob}{hexANSI(self.colorR)}{self.style.line*(self.sliderWidth-self.sliderPos)} {hexANSI(self.colorText)}{self.text}"
         else:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{'─'*self.sliderPos}█{'─'*(self.sliderWidth-self.sliderPos)} {self.text}"""
+            return f"{hexANSI(brightness(self.colorL, 0.5))}{self.style.line*self.sliderPos}{hexANSI(brightness(self.colorKnob, 0.5))}{self.style.knob}{hexANSI(brightness(self.colorR, 0.5))}{self.style.line*(self.sliderWidth-self.sliderPos)} {hexANSI(brightness(self.colorText, 0.5))}{self.text}"

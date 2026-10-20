@@ -1,5 +1,5 @@
 class StyleTemplate:
-    def __init__(self, cornerNW, cornerNE, cornerSW, cornerSE, edgeN, edgeE, edgeS, edgeW, fill):
+    def __init__(self, cornerNW, cornerNE, cornerSW, cornerSE, edgeN, edgeE, edgeS, edgeW, fill, check, uncheck, knob, line):
         self.cornerNW = cornerNW
         self.cornerNE = cornerNE
         self.cornerSW = cornerSW
@@ -9,6 +9,12 @@ class StyleTemplate:
         self.edgeS = edgeS
         self.edgeW = edgeW
         self.fill = fill
+
+        self.check = check
+        self.uncheck = uncheck
+
+        self.knob = knob
+        self.line = line
 
     def __str__(self):
         return f"""{self.cornerNW}{self.edgeN}{self.cornerNE}
