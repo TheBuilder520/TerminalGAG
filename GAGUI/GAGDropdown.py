@@ -49,6 +49,7 @@ class GAGDropdown(GAGBasicUI):
                 self.state.inMenu = True
                 self.__checkNext = False
                 self.selectedIndex = self.__index
+                self.selectedText = self.options[self.selectedIndex]
 
         else:
             self.height = 4
