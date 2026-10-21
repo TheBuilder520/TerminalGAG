@@ -9,7 +9,7 @@ class GAGNumericStepper(GAGBasicUI):
         self.y = y
         self.selectionX = selectionX
         self.selectionY = selectionY
-        self.width = len(str(startingValue))+4
+        self.width = len(str(startingValue))+6
         self.height = 3
         self.minNum = min
         self.maxNum = max
@@ -56,14 +56,16 @@ class GAGNumericStepper(GAGBasicUI):
 
     def __str__(self): # I HOPE YOU LIKE F-STRINGS
         if self.selected:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.cornerNE}
-{self.style.edgeW}{self.style.fill}{hexANSI(self.color)}{str(self.__visValue)}{hexANSI(brightness(self.color, 0.5))}{self.style.fill}{self.style.edgeE}
-{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.cornerSE}"""
+            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.teeN}{self.style.edgeN*5}{self.style.cornerNE}
+{self.style.edgeW}{self.style.fill}{hexANSI(self.color)}{str(self.__visValue)}{hexANSI(brightness(self.color, 0.5))}{self.style.fill}{self.style.edgeE}{hexANSI(self.color)} - + {hexANSI(brightness(self.color, 0.5))}{self.style.edgeE}
+{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.teeS}{self.style.edgeS*5}{self.style.cornerSE}"""
+        
         elif self.hovering:
-            return f"""{hexANSI(self.color)}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.cornerNE}
-{self.style.edgeW}{self.style.fill}{str(self.__visValue)}{self.style.fill}{self.style.edgeE}
-{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.cornerSE}"""
+            return f"""{hexANSI(self.color)}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.teeN}{self.style.edgeN*5}{self.style.cornerNE}
+{self.style.edgeW}{self.style.fill}{str(self.__visValue)}{self.style.fill}{self.style.edgeE} - + {self.style.edgeE}
+{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.teeS}{self.style.edgeS*5}{self.style.cornerSE}"""
+        
         else:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.cornerNE}
-{self.style.edgeW}{self.style.fill}{str(self.__visValue)}{self.style.fill}{self.style.edgeE}
-{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.cornerSE}"""
+            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(len(str(self.__visValue))+2)}{self.style.teeN}{self.style.edgeN*5}{self.style.cornerNE}
+{self.style.edgeW}{self.style.fill}{str(self.__visValue)}{self.style.fill}{self.style.edgeE} - + {self.style.edgeE}
+{self.style.cornerSW}{self.style.edgeS*(len(str(self.__visValue))+2)}{self.style.teeS}{self.style.edgeS*5}{self.style.cornerSE}"""
