@@ -27,6 +27,14 @@ class GAGBox(GAGBasicUI):
         super().update(elapsed)
         self.object = str(self)
 
+        for tab in self.tabs:
+            if tab == self.selectedTab:
+                for object in self.__tabObjects[tab]:
+                    object.visible = True
+            else:
+                for object in self.__tabObjects[tab]:
+                    object.visible = False
+
         if self.selected:
             if self.state.GAGKeyboard.LEFT and self.__tabIndex != 0:
                 self.__tabIndex -= 1
@@ -43,6 +51,9 @@ class GAGBox(GAGBasicUI):
 
     def addObject(self, tabName, object):
         self.__tabObjects[tabName].append(object)
+
+    def removeObject(self, tabName, object):
+        self.__tabObjects[tabName].remove(object)
 
     def onSelect(self):
         if self.__checkNext:
