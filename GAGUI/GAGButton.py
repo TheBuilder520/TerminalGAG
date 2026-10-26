@@ -25,6 +25,7 @@ class GAGButton(GAGBasicUI):
         self.object = str(self)
 
     def onSelect(self):
+        self.state.playSound("mid")
         self.pressFunction()
 
     def __str__(self):

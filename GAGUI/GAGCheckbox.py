@@ -29,8 +29,10 @@ class GAGCheckBox(GAGBasicUI):
     def onSelect(self):
         if self.value:
             self.value = False
+            self.state.playSound("back")
         else:
             self.value = True
+            self.state.playSound("enter")
 
     def __str__(self):
         if self.hovering:

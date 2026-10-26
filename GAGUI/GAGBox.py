@@ -28,7 +28,7 @@ class GAGBox(GAGBasicUI):
         self.object = str(self)
 
         for tab in self.tabs:
-            if tab == self.selectedTab:
+            if tab == self.selectedTab and self.visible:
                 for object in self.__tabObjects[tab]:
                     object.visible = True
             else:
@@ -38,16 +38,20 @@ class GAGBox(GAGBasicUI):
         if self.selected:
             if self.state.GAGKeyboard.LEFT and self.__tabIndex != 0:
                 self.__tabIndex -= 1
+                self.state.playSound("high")
             if self.state.GAGKeyboard.RIGHT and self.__tabIndex != len(self.tabs)-1:
                 self.__tabIndex += 1
+                self.state.playSound("high")
             if self.state.GAGKeyboard.BACKSPACE:
                 self.selected = False
                 self.state.inMenu = True
+                self.state.playSound("back")
             if self.state.GAGKeyboard.ENTER or self.state.GAGKeyboard.SPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.__checkNext = False
                 self.selectedTab = self.tabs[self.__tabIndex]
+                self.state.playSound("enter")
 
     def addObject(self, tabName, object):
         self.__tabObjects[tabName].append(object)
@@ -59,6 +63,7 @@ class GAGBox(GAGBasicUI):
         if self.__checkNext:
             self.selected = True
             self.state.inMenu = False
+            self.state.playSound("mid")
         else:
             self.__checkNext = True
 

@@ -32,7 +32,7 @@ class SplashScreen(GAGState):
 
         if self.audioSupported: 
             mixer.init()
-            sound = mixer.Sound("./TerminalGAG/TerminalGAG Boot.wav")
+            sound = mixer.Sound("./TerminalGAG/sounds/TerminalGAG Boot.wav")
             mixer.Sound.play(sound)
 
         self.call(self.timer)
@@ -40,6 +40,10 @@ class SplashScreen(GAGState):
 
     def update(self, elapsed):
         super().update(elapsed)
+        if self.GAGKeyboard.ENTER:
+            self.running = False
+            if self.audioSupported: mixer.quit()
+
         if self.timer.isComplete():
             self.timerCounter += 1
             match(self.timerCounter):

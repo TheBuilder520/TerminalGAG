@@ -3,16 +3,17 @@ from .styles.roundedStyle import *
 from ..utils import *
 
 class GAGTextbox(GAGBasicUI):
-    def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, text="", style=RoundedStyle()):
+    def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, text="", descriptionText="", style=RoundedStyle()):
         super().__init__()
         self.x = x
         self.y = y
         self.selectionX = selectionX
         self.selectionY = selectionY
         self.text = text
+        self.descriptionText = descriptionText
         self.__visText = text
         self.width = width
-        self.height = 3
+        self.height = 4
         self.color = "#ffffff"
         self.style = style
         self.__checkNext = True
@@ -34,12 +35,14 @@ class GAGTextbox(GAGBasicUI):
                 self.selected = False
                 self.state.inMenu = True
                 self.__checkNext = False
+                self.state.playSound("enter")
                 return
 
             if key == "esc":
                 self.text = self.__initText
                 self.selected = False
                 self.state.inMenu = True
+                self.state.playSound("back")
                 return
 
             if key == "space":
@@ -67,20 +70,24 @@ class GAGTextbox(GAGBasicUI):
             self.selected = True
             self.state.inMenu = False
             self.__initText = self.text
+            self.state.playSound("mid")
         else:
             self.__checkNext = True
 
 
     def __str__(self):
         if self.selected:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
+            return f"""{hexANSI(brightness(self.color, 0.5))}{self.descriptionText}
+{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{hexANSI(self.color)}{self.__visText}{hexANSI(brightness(self.color, 0.5))}{self.style.fill*(self.width-3-len(self.__visText))}{self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-2)}{self.style.cornerSE}"""
         if self.hovering:
-            return f"""{hexANSI(self.color)}{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
+            return f"""{hexANSI(self.color)}{self.descriptionText}
+{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{self.__visText}{self.style.fill*(self.width-3-len(self.__visText))}{self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-2)}{self.style.cornerSE}"""
         else:
-            return f"""{hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
+            return f"""{hexANSI(brightness(self.color, 0.5))}{self.descriptionText}
+{self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{self.__visText}{self.style.fill*(self.width-3-len(self.__visText))}{self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-2)}{self.style.cornerSE}"""

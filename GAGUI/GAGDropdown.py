@@ -35,14 +35,17 @@ class GAGDropdown(GAGBasicUI):
             self.height = 4 + len(self.options)*2
             if self.state.GAGKeyboard.UP and self.__index > 0:
                 self.__index -= 1
+                self.state.playSound("high")
 
             if self.state.GAGKeyboard.DOWN and self.__index < len(self.options)-1:
                 self.__index += 1
+                self.state.playSound("high")
 
             if self.state.GAGKeyboard.BACKSPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.__index = self.selectedIndex
+                self.state.playSound("back")
 
             if self.state.GAGKeyboard.ENTER or self.state.GAGKeyboard.SPACE:
                 self.selected = False
@@ -50,15 +53,18 @@ class GAGDropdown(GAGBasicUI):
                 self.__checkNext = False
                 self.selectedIndex = self.__index
                 self.selectedText = self.options[self.selectedIndex]
+                self.state.playSound("enter")
 
         else:
             self.height = 4
+            self.__index = self.selectedIndex
 
 
     def onSelect(self):
         if self.__checkNext:
             self.selected = True
             self.state.inMenu = False
+            self.state.playSound("mid")
         else:
             self.__checkNext = True
 

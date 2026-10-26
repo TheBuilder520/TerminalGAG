@@ -16,4 +16,4 @@ class GAGBasicUI(GAGBasic):
         self.hovering = True
 
     def onSelect(self):
-        self.selected = False
+        self.selected = True
