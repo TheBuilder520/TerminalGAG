@@ -53,7 +53,7 @@ class GAGSprite(GAGBasic):
         if self.__timer.getLength() != 1/self.FPS: self.__timer.setLength(1/self.FPS)
 
         if self.__timer.isComplete() and (self.currentAnimation != None):
-            self.__currentFrame += 1
+            if len(self.__animationDict[self.currentAnimation][0]) == 0: self.__currentFrame += 1
             self.__timer.reset()
 
             self.object = hexANSI(self.color) + self.__graphic[self.__animationDict[self.currentAnimation][0][self.__currentFrame]]
@@ -66,5 +66,5 @@ class GAGSprite(GAGBasic):
                 if self.__idleAnimation != "":
                     self.playAnimation(self.__idleAnimation)
 
-            if self.__currentFrame+1 == self.__numFrames and self.__animationDict[self.currentAnimation][1]:
+            if self.currentAnimation != None and self.__currentFrame+1 == self.__numFrames and self.__animationDict[self.currentAnimation][1]:
                 self.__currentFrame = -1
