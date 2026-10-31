@@ -56,3 +56,5 @@ debug = False
 FPSCounter = False
 
 doSplash = False
+
+customErrors = True

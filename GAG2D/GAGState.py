@@ -18,8 +18,10 @@ class GAGState:
     def __init__(self, width=planeWidth, height=planeHeight):
         self.running = True
         self.objects = []
+        self.fillChar = " "
         self.plane = self.generatePlane(width, height)
         self.camera = GAGCamera(mainScreen, self)
+       
         self.__runningFunctions:list[GAGFunction] = []
         if debug: print("State initialized")
 
@@ -94,5 +96,5 @@ class GAGState:
         for y in range(height):
             plane.append([])
             for x in range(width):
-                plane[y].append(" ")
+                plane[y].append(self.fillChar)
         return plane

@@ -28,6 +28,9 @@ class GAGScreen:
             os.system("cls")
         else:
             os.system("clear")
+
+        self.screen = self.generateScreen() # The stuff you see
+        self.lastFrame = self.generateScreen()
     
     def create(self):
         """Ran when the object is first created"""

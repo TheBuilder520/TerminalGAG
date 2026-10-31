@@ -10,6 +10,7 @@ RESET = "\033[0m"
 
 # global to allow for previous states to be destroyed
 currentState = None
+lastState = None
 inState = False
 
 def trueLen(text:str):
@@ -254,11 +255,14 @@ def brightness(hexCode:str = "#ffffff", brightnessMulti=1):
     return f"#{hex(rClamped)[2:]:2}{hex(gClamped)[2:]:2}{hex(bClamped)[2:]:2}"
 
 def switchStates(newState):
+    from .GAGErrorState import ErrorState
     if debug: print("Switching states")
     global inState
     global currentState
+    global lastState
     if not inState: # Check to see if a state is already active
         currentState = newState
+        error = None
 
         inState = True
 
@@ -266,12 +270,26 @@ def switchStates(newState):
 
         lastTime = time.time()
 
-        while currentState.running & (currentState != None):
-            elapsed = time.time() - lastTime
-            lastTime = time.time()
-            currentState.update(elapsed)
+        if customErrors:
+            try:
+                while currentState.running & (currentState != None):
+                    elapsed = time.time() - lastTime
+                    lastTime = time.time()
+                    currentState.update(elapsed)
+            except Exception as e:
+                error = e
+
+        else:
+            while currentState.running & (currentState != None):
+                elapsed = time.time() - lastTime
+                lastTime = time.time()
+                currentState.update(elapsed)
 
         inState = False
+        currentState.destroy()
+
+        if error != None:
+            switchStates(ErrorState(error, lastState, currentState.camera.screen.screen))
 
         sys.stdout.write(f"\033[{screenHeight};0H")
     else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
@@ -279,8 +297,10 @@ def switchStates(newState):
             inState = False
             currentState.destroy()   
             currentState = None
-        
+
         currentState = newState
+
+        lastState = currentState
 
         currentState.create()
 
