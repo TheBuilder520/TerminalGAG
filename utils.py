@@ -5,6 +5,7 @@ from .config import *
 import math
 import time
 import sys
+from copy import deepcopy
 
 RESET = "\033[0m"
 
@@ -12,6 +13,7 @@ RESET = "\033[0m"
 currentState = None
 lastState = None
 inState = False
+error = None
 
 def trueLen(text:str):
     """Gives the true length of a string. This will automatically ignore colors and escape codes."""
@@ -134,7 +136,7 @@ def insertObject(object, parsedObject, plane):
 
     objectY = math.floor(object.y)
     objectX = math.floor(object.x)
-    for y in range(object.height):
+    for y in range(len(parsedObject)):
         for x in range(len(parsedObject[y])):
             try:
                 if parsedObject[y][x] != "":
@@ -257,12 +259,16 @@ def brightness(hexCode:str = "#ffffff", brightnessMulti=1):
 def switchStates(newState):
     from .GAGErrorState import ErrorState
     if debug: print("Switching states")
+    global error
     global inState
     global currentState
     global lastState
     if not inState: # Check to see if a state is already active
         currentState = newState
-        error = None
+        
+
+        if lastState == None:
+            lastState = deepcopy(newState)
 
         inState = True
 
@@ -288,9 +294,6 @@ def switchStates(newState):
         inState = False
         currentState.destroy()
 
-        if error != None:
-            switchStates(ErrorState(error, lastState, currentState.camera.screen.screen))
-
         sys.stdout.write(f"\033[{screenHeight};0H")
     else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
         if currentState != None:
@@ -300,10 +303,10 @@ def switchStates(newState):
 
         currentState = newState
 
-        lastState = currentState
-
         currentState.create()
 
         inState = True
+        error = None
 
-    
+    if error != None:
+        switchStates(ErrorState(error, lastState, currentState.camera.screen.screen))

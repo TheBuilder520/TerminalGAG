@@ -53,6 +53,11 @@ r"""
         self.error = error
         self.lastState = lastState
 
+        try:
+            mixer.quit()
+        except:
+            pass
+
         self.errorTitle = GAGText(0, 0, f"")
         self.errorTitle.color = "#ff0000"
         self.totalTime = 0
@@ -82,11 +87,11 @@ r"""
         self.errorText.color = "#C353B8"
         self.errorText.visible = False
 
-        self.exitButton = GAGButton(50, 3, 0, 0, "Exit!", sys.exit)
+        self.exitButton = GAGButton(50, 3, 0, 0, "Exit!", self.stop)
         self.exitButton.color = "#FF0000"
 
         if self.lastState != None:
-            self.lastStateButton = GAGButton(65, 3, 1, 0, "Return to last state!", self.gotoLastState)
+            self.lastStateButton = GAGButton(65, 3, 1, 0, "Return to first state!", self.gotoLastState)
             self.lastStateButton.color = "#FF0000"
             
 
@@ -97,7 +102,11 @@ r"""
         self.inMenu = True
 
     def gotoLastState(self):
+        self.running = False
         switchStates(self.lastState)
+
+    def stop(self):
+         self.running = False
 
     def update(self, elapsed):
         super().update(elapsed)
