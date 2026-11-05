@@ -90,9 +90,9 @@ r"""
         self.exitButton = GAGButton(50, 3, 0, 0, "Exit!", self.stop)
         self.exitButton.color = "#FF0000"
 
-        if self.lastState != None:
-            self.lastStateButton = GAGButton(65, 3, 1, 0, "Return to first state!", self.gotoLastState)
-            self.lastStateButton.color = "#FF0000"
+        # if self.lastState != None:
+        #     self.lastStateButton = GAGButton(65, 3, 1, 0, "Return to first state!", self.gotoLastState)
+        #     self.lastStateButton.color = "#FF0000"
             
 
         self.add(self.errorText)
@@ -106,7 +106,8 @@ r"""
         switchStates(self.lastState)
 
     def stop(self):
-         self.running = False
+        self.running = False
+        sys.exit()
 
     def update(self, elapsed):
         super().update(elapsed)
@@ -150,8 +151,8 @@ r"""
                 case 8:
                     self.errorText.visible = True
                     self.add(self.exitButton)
-                    if self.lastState != None:
-                        self.add(self.lastStateButton)
+                    # if self.lastState != None:
+                    #     self.add(self.lastStateButton)
 
             if self.beat > 8 and self.beat % 2 == 1:
                 self.call(self.Flash(self.errorTitle))

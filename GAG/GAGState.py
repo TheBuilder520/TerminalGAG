@@ -12,7 +12,7 @@ from .objects.GAGText import *
 from time import sleep
 import sys
 
-
+# The heart of TerminalGAG
 
 class GAGState:
     def __init__(self, width=planeWidth, height=planeHeight):

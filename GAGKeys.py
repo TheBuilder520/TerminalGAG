@@ -203,7 +203,7 @@ class GAGKeyboard:
         self.mouseLeft = True
 
     def keyPress(self):
-        from .GAG2D.GAGState import inState # prevents circular imports
+        from .GAG.GAGState import inState # prevents circular imports
         try:
             while inState or not self.stop:
                 if os.name == "posix":

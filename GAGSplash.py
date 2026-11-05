@@ -1,8 +1,8 @@
-from TerminalGAG.GAGTimer import GAGTimer
-from TerminalGAG.GAGTween import *
+from .GAGTimer import GAGTimer
+from .GAGTween import *
 
 from .utils import *
-from .GAG2D.GAGState import *
+from .GAG.GAGState import *
 from pygame import mixer
 from random import randint
 

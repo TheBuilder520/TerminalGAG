@@ -1,4 +1,4 @@
-from ..GAG2D.GAGBasic import *
+from ..GAG.GAGBasic import *
 
 class GAGBasicUI(GAGBasic):
     def __init__(self):

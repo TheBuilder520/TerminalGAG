@@ -1,4 +1,4 @@
-from ..GAG2D.GAGState import *
+from ..GAG.GAGState import *
 from .GAGBasicUI import *
 from pygame import mixer
 
