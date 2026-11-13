@@ -1,6 +1,8 @@
 from ..GAGBasic import *
 from ...utils import *
 
+from numpy import array
+
 class GAGGraphic(GAGBasic):
     def __init__(self, x=0, y=0, width=1, height=1):
         super().__init__()
@@ -10,11 +12,8 @@ class GAGGraphic(GAGBasic):
         self.height = height
         self.color = "#ffffff"
 
-    def create(self):
-        super().create()
-        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+        self.object = (hexANSI(self.color) + (f"█"*self.width + "\n")*self.height).strip()
 
-    def update(self, elapsed):
-        super().update(elapsed)
-        self.object = hexANSI(self.color) + (f"█"*self.width + "\n")*self.height
-                
+        return array(parseObject(self))[y1:y2, x1:x2]

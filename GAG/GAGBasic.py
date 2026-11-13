@@ -1,5 +1,6 @@
 # This is a basic object that has all the basic attributes apparent on all objects
 from ..GAGFunction import *
+from ..GAGInstance import GAGInstance as GAGI # Dont ask how importing this here imports it everywhere else
 
 class GAGBasic:
     def __init__(self):
@@ -8,6 +9,7 @@ class GAGBasic:
         self.width = 0
         self.height = 0
         self.visible = True
+        self.cameras = [GAGI.cameras[0]]
         self.object = "" # Basically in ASCII art format
         self.__runningFunctions:list[GAGFunction] = []
 
@@ -27,6 +29,12 @@ class GAGBasic:
             if not function.isRunning():
                 self.__runningFunctions.remove(function)
                 function.destroy()
+
+        for cam in self.cameras:
+            cam.draw(self)
+
+    def draw(self, x1, y1, x2, y2):
+        pass
 
     def destroy(self):
         pass

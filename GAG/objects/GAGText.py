@@ -1,5 +1,6 @@
 from ..GAGBasic import *
 from ...utils import *
+from numpy import array
 
 class GAGText(GAGBasic):
     def __init__(self, x=0, y=0, text=""):
@@ -26,4 +27,8 @@ class GAGText(GAGBasic):
             self.previousText = self.text
 
         super().update(elapsed)
+    
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
 
+        return array(parseObject(self))[y1:y2, x1:x2]

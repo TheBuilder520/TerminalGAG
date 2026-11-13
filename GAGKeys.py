@@ -203,9 +203,9 @@ class GAGKeyboard:
         self.mouseLeft = True
 
     def keyPress(self):
-        from .GAG.GAGState import inState # prevents circular imports
+        from .GAGInstance import GAGInstance # prevents circular imports
         try:
-            while inState or not self.stop:
+            while GAGInstance.inState or not self.stop:
                 if os.name == "posix":
                     originalTerminal = termios.tcgetattr(sys.stdin)
 

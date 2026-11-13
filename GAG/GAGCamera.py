@@ -1,24 +1,27 @@
-from .GAGBasic import *
 from .objects.GAGText import *
 from ..config import *
 from ..utils import *
-
 import sys
 import os
 
-class GAGCamera(GAGBasic):
-    def __init__(self, screen, state):
-        super().__init__()
-        self.screen = screen
-        self.state = state
+class GAGCamera:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.visible = True
+        self.screen = GAGI.screen
         self.height = screenHeight
         self.width = screenWidth
-        self.planeX = 0
-        self.planeY = 0
+        self.viewX = 0
+        self.viewY = 0
         self.objectLink = None
         self.linkOffsetX = 0
         self.linkOffsetY = 0
         self.hud = []
+        GAGI.cameras.append(self)
+        self.create()
         if debug: print(f"camera initialized {self.width}x{self.height}")
 
     def __str__(self):
@@ -27,7 +30,6 @@ class GAGCamera(GAGBasic):
     
     def create(self):
         """Ran when the object is first created"""
-        super().create()
         if debug: print("camera created")
 
         if FPSCounter:
@@ -41,14 +43,21 @@ class GAGCamera(GAGBasic):
         """Adds an object to the state."""
         object.create()
         self.hud.append(object)
+
+    def draw(self, drawObject):
+        # Test to see if the object overlaps the camera, if not, do nothing since it would be a wast to render something you cant see.
+        if (drawObject.x <= self.viewX + self.width and drawObject.x + drawObject.width >= self.x and drawObject.y <= self.viewY + self.height and drawObject.y + drawObject.height >= self.viewY): 
+
+            x1 = round(max(self.viewX, drawObject.x) - drawObject.x)
+            y1 = round(max(self.viewY, drawObject.y) - drawObject.y)
+
+            x2 = round(min(self.viewX + self.width, drawObject.x + drawObject.width) - drawObject.x)
+            y2 = round(min(self.viewY + self.height, drawObject.y + drawObject.height) - drawObject.y)
+
+            insertObjectC(drawObject.x - self.viewX, drawObject.y - self.viewY, drawObject.draw(x1, y1, x2, y2), self.screen.screen)
         
     def update(self, elapsed):
         """Ran every frame"""
-        super().update(elapsed)
-        for y in range(self.height):
-            for x in range(self.width):
-                   self.screen.screen[y+self.y][x+self.x] = self.state.plane[int((self.planeY + y) % self.state.height)][int((self.planeX + x) % self.state.width)] 
-
         for object in self.hud: 
             object.update(elapsed)
 
@@ -67,4 +76,6 @@ class GAGCamera(GAGBasic):
             else:
                 self.GAGfps.color = "#00FF00"
 
-        self.screen.update(elapsed)
+        if self.objectLink != None:
+            self.viewX = self.objectLink.x + self.linkOffsetX
+            self.viewY = self.objectLink.y + self.linkOffsetY

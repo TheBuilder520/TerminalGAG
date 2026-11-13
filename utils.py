@@ -7,13 +7,9 @@ import time
 import sys
 from copy import deepcopy
 
-RESET = "\033[0m"
+from .GAGInstance import GAGInstance as GAGI
 
-# global to allow for previous states to be destroyed
-currentState = None
-lastState = None
-inState = False
-error = None
+RESET = "\033[0m"
 
 def trueLen(text:str):
     """Gives the true length of a string. This will automatically ignore colors and escape codes."""
@@ -148,6 +144,23 @@ def insertObject(object, parsedObject, plane):
 
     #if debug: print("Inserted Object")
 
+def insertObjectC(x, y, parsedObject, plane):
+    """Inserts an object into a plane"""
+
+    objectY = math.floor(y)
+    objectX = math.floor(x)
+    for y in range(len(parsedObject)):
+        for x in range(len(parsedObject[y])):
+            try:
+                if parsedObject[y][x] != "":
+                    plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = parsedObject[y][x]
+            except:
+                 plane[(objectY + y) % len(plane)][(objectX + x) % len(plane[0])] = " "
+
+    # print(plane)
+
+    #if debug: print("Inserted Object")
+
 def generatePlane(width, height, fillChar=" "):
     """Generates the physical space objects can appear on"""
     plane = []
@@ -187,54 +200,23 @@ def brightness(hexCode:str = "#ffffff", brightnessMulti=1):
 def switchStates(newState):
     from .GAGErrorState import ErrorState
     if debug: print("Switching states")
-    global error
-    global inState
-    global currentState
-    global lastState
-    if not inState: # Check to see if a state is already active
-        currentState = newState
+    GAGI.currentState 
+    if not GAGI.inState: # Check to see if a state is already active
+        GAGI.currentState = newState
         
 
-        if lastState == None:
-            lastState = deepcopy(newState)
+        if GAGI.lastState == None:
+            GAGI.lastState = deepcopy(newState)
 
-        inState = True
-
-        newState.create()
-
-        lastTime = time.time()
-
-        if customErrors:
-            try:
-                while currentState.running & (currentState != None):
-                    elapsed = time.time() - lastTime
-                    lastTime = time.time()
-                    currentState.update(elapsed)
-            except Exception as e:
-                error = e
-
-        else:
-            while currentState.running & (currentState != None):
-                elapsed = time.time() - lastTime
-                lastTime = time.time()
-                currentState.update(elapsed)
-
-        inState = False
-        currentState.destroy()
+        GAGI.startLoop()
 
         sys.stdout.write(f"\033[{screenHeight};0H")
     else: # If there is a state already active, destroy it and switch to the new state while trying to use the original switch state function. Prevents nesting states too much
-        if currentState != None:
-            inState = False
-            currentState.destroy()   
-            currentState = None
+        GAGI.nextState = newState
 
-        currentState = newState
+        GAGI.nextState.create()
 
-        currentState.create()
+        GAGI.error = None
 
-        inState = True
-        error = None
-
-    if error != None:
-        switchStates(ErrorState(error, lastState, currentState.camera.screen.screen))
+    if GAGI.error != None:
+        switchStates(ErrorState(GAGI.error, GAGI.lastState, GAGI.cameras[0].screen.screen))

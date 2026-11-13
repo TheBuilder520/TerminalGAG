@@ -42,15 +42,19 @@ class GAGScreen:
         """Ran every frame"""
         # print(self.screen)
         # print(self.lastFrame)
+
         for y in range(screenHeight):
             for x in range(screenWidth):
                 if self.screen[y][x] != self.lastFrame[y][x]:
                     self.lastFrame[y][x] = self.screen[y][x]
                     sys.stdout.write(f"\033[{y+1};{x+1}H{self.screen[y][x]}")
 
-                    print() # DO NOT REMOVE THIS PRINT STATEMENT IF YOU REMOVE IT, WEIRD STUFF WILL HAPPEN AND YOU WILL WONDER WHAT IS WRONG FOR 2 HOURS! I CAN NOT DESCRIBE MY CONFUSION RIGHT NOW
+                    # I removed it... I understood what happened now.
+                    # print() # DO NOT REMOVE THIS PRINT STATEMENT IF YOU REMOVE IT, WEIRD STUFF WILL HAPPEN AND YOU WILL WONDER WHAT IS WRONG FOR 2 HOURS! I CAN NOT DESCRIBE MY CONFUSION RIGHT NOW
 
                     # if debug: print("WOAH! SOMETHING CHANGED!") 
+
+        sys.stdout.flush()
 
     def generateScreen(self):
         """Generates a blank screen"""

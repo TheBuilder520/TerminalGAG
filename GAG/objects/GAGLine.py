@@ -1,5 +1,6 @@
 from ..GAGBasic import *
 from ...utils import *
+from numpy import array
 
 class GAGLine(GAGBasic):
     def __init__(self, x=0, y=0, x2=10, y2=10):
@@ -12,14 +13,6 @@ class GAGLine(GAGBasic):
         self.width = x2 - x
         self.height = y2 - y
         self.color = "#ffffff"
-
-    def create(self):
-        super().create()
-        self.object = str(self)
-
-    def update(self, elapsed):
-        super().update(elapsed)
-        self.object = str(self)
 
     def bresenham(self, x0, y0, x1, y1):
         out = []
@@ -63,3 +56,10 @@ class GAGLine(GAGBasic):
             out += '\n'
 
         return hexANSI(self.color) + out.strip()
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        self.object = str(self)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

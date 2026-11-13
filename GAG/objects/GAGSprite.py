@@ -1,6 +1,7 @@
 from ..GAGBasic import *
 from ...utils import *
 from ...GAGTimer import *
+from numpy import array
 
 # This will probably be the most useful and most used object
 
@@ -53,7 +54,7 @@ class GAGSprite(GAGBasic):
         if self.__timer.getLength() != 1/self.FPS: self.__timer.setLength(1/self.FPS)
 
         if self.__timer.isComplete() and (self.currentAnimation != None):
-            if len(self.__animationDict[self.currentAnimation][0]) == 0: self.__currentFrame += 1
+            if len(self.__animationDict[self.currentAnimation][0]) != 1: self.__currentFrame += 1 # TODO FIX
             self.__timer.reset()
 
             self.object = hexANSI(self.color) + self.__graphic[self.__animationDict[self.currentAnimation][0][self.__currentFrame]]
@@ -68,3 +69,9 @@ class GAGSprite(GAGBasic):
 
             if self.currentAnimation != None and self.__currentFrame+1 == self.__numFrames and self.__animationDict[self.currentAnimation][1]:
                 self.__currentFrame = -1
+
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]
