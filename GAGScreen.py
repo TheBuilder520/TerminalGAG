@@ -43,24 +43,27 @@ class GAGScreen:
         # print(self.screen)
         # print(self.lastFrame)
 
+        frameData = ""
+
         for y in range(screenHeight):
             for x in range(screenWidth):
                 if self.screen[y][x] != self.lastFrame[y][x]:
-                    self.lastFrame[y][x] = self.screen[y][x]
-                    sys.stdout.write(f"\033[{y+1};{x+1}H{self.screen[y][x]}")
+                    frameData += f"\033[{y+1};{x+1}H{self.screen[y][x]}"
 
                     # I removed it... I understood what happened now.
                     # print() # DO NOT REMOVE THIS PRINT STATEMENT IF YOU REMOVE IT, WEIRD STUFF WILL HAPPEN AND YOU WILL WONDER WHAT IS WRONG FOR 2 HOURS! I CAN NOT DESCRIBE MY CONFUSION RIGHT NOW
 
                     # if debug: print("WOAH! SOMETHING CHANGED!") 
 
+        self.lastFrame = self.screen
+        sys.stdout.write(frameData) 
         sys.stdout.flush()
 
     def generateScreen(self):
         """Generates a blank screen"""
         screen = []
-        for y in range(screenHeight):
+        for y in range(screenHeight+1):
             screen.append([])
-            for x in range(screenWidth):
+            for x in range(screenWidth+1):
                 screen[y].append(" ")
         return screen

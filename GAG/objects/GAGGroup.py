@@ -47,4 +47,5 @@ class GAGGroup(GAGBasic):
     def draw(self, x1, y1, x2, y2):
         super().draw(x1, y1, x2, y2)
         
-        return self.plane[y1:y2, x1:x2]
+        #return self.plane[y1:y2, x1:x2]
+        return []
