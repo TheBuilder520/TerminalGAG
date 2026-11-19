@@ -1,4 +1,4 @@
-> [!INFO]
+> [!NOTE]
 > TerminalGAG Wiki will be coming in the future.
 
 # Welcome to TerminalGAG!
