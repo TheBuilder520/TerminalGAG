@@ -1,5 +1,5 @@
-> [!WARNING]
-> TerminalGAG is still in beta and will have bugs and errors! Use at your own risk!
+> [!INFO]
+> TerminalGAG Wiki will be coming in the future.
 
 # Welcome to TerminalGAG!
 
