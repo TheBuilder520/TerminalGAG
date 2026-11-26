@@ -1,5 +1,5 @@
-> [!WARNING]
-> TerminalGAG is still in beta and will have bugs and errors! Use at your own risk!
+> [!NOTE]
+> TerminalGAG Wiki will be coming in the future.
 
 # Welcome to TerminalGAG!
 
@@ -15,16 +15,16 @@ Then, you would want to create a new file calling it 'PlayState.py'. This file w
 
 Inside of your Playstate.py, add these 2 lines of code:
 
-```
-from TerminalGAG.GAG2D.GAGState import * 
-from TerminalGAG.GAG2D.objects.GAGText import *
+```python
+from TerminalGAG.GAG.GAGState import * 
+from TerminalGAG.GAG.objects.GAGText import *
 ```
 
 These 2 lines import the state class and the text object.
 
 Then, add this basic frame work to your file:
 
-```
+```python
 class PlayState(GAGState):
   def create(self):
     super().create()
@@ -37,13 +37,13 @@ This will be the start of every state you make.
 
 Next thing you need is a text object. You can do that by adding this line in the create method after the super call.
 
-```
+```python
 self.text = GAGText(1, 1, "Hello World!") # The variables are x, y, text
 ```
 
 Then, you will need to add it to the state with this method.
 
-```
+```python
 self.add(self.text)
 ```
 
