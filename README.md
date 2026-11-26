@@ -1,6 +1,9 @@
 > [!NOTE]
 > TerminalGAG Wiki will be coming in the future.
 
+> [!WARNING]
+> Too many objects in one state can cause lag!
+
 # Welcome to TerminalGAG!
 
 TerminalGAG is a package that I am currently working on and actively making changes to. It is not complete so there are probably bugs and other stuff missing, but I plan to make stuff in the future. TerminalGAG uses states and objects to make things work.
