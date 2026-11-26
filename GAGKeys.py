@@ -8,7 +8,8 @@ if os.name != "nt":
     import termios
     import tty
 import sys
-from .Window import TerminalWindow
+if os.name == "nt":
+    from .Window import TerminalWindow
 
 # TODO add the rest of the keyboard
 
@@ -54,7 +55,7 @@ class GAGKeyboard:
         self.Y = False
         self.Z = False
 
-        if os.name != "posix":
+        if os.name == "nt":
             self.__window = TerminalWindow()
             
             self.mouseX = 0

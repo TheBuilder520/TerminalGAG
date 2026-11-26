@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from ..utils import *
 from .styles.roundedStyle import *
 
+from numpy import array
+
 class GAGNumericStepper(GAGBasicUI):
     def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, min=0 ,max=1, increment=1, startingValue=0, text="", style=RoundedStyle()):
         super().__init__()
@@ -78,3 +80,8 @@ class GAGNumericStepper(GAGBasicUI):
 {self.style.cornerNW}{self.style.edgeN*(self.width-6)}{self.style.teeN}{self.style.edgeN*5}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{str(self.__visValue)}{self.style.fill*(self.width-7-len(str(self.__visValue)))}{self.style.edgeE} - + {self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-6)}{self.style.teeS}{self.style.edgeS*5}{self.style.cornerSE}"""
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

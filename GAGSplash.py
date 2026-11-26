@@ -6,10 +6,9 @@ from .GAG.GAGState import *
 from pygame import mixer
 from random import randint
 
-VERSION_NUMBER = "2.0.0 Alpha"
+from .GAGInstance import GAGInstance as GAGI
 
-def __trueRainbow(text):
-    return customGradient(text, ["#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ff0000"])
+VERSION_NUMBER = "2.0.0"
 
 class SplashScreen(GAGState):
     def create(self):
@@ -40,7 +39,7 @@ class SplashScreen(GAGState):
 
     def update(self, elapsed):
         super().update(elapsed)
-        if self.GAGKeyboard.ENTER:
+        if GAGI.GAGKeyboard.ENTER:
             self.running = False
             if self.audioSupported: mixer.quit()
 
@@ -143,11 +142,10 @@ class SplashScreen(GAGState):
                     self.timer.reset()
                 case 22:
 
-                    self.overlayText = GAGText(screenWidth//2-8, 17,                     fr"""
-  Powered  by    {hexANSI("#ff0000")}/{hexANSI("#ff8000")}‾{hexANSI("#ffff00")}\{RESET}
+                    self.overlayText = GAGText(screenWidth//2-8, 17, 
+fr"""  Powered  by    {hexANSI("#ff0000")}/{hexANSI("#ff8000")}‾{hexANSI("#ffff00")}\{RESET} 
 ˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳{hexANSI("#ff00ff")}<{RESET}GAG{hexANSI("#00ff00")}>{RESET}
-˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳{hexANSI("#0080ff")}\{hexANSI("#00ffff")}_{hexANSI("#00ff80")}/{RESET}
-  """)
+˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳˳{hexANSI("#0080ff")}\{hexANSI("#00ffff")}_{hexANSI("#00ff80")}/{RESET} """)
                     self.add(self.overlayText)
 
                     self.versionText = GAGText(0, screenHeight-1, "Version: " + VERSION_NUMBER)

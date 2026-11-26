@@ -1,11 +1,15 @@
 """TerminalGAG is a graphics engine that can be used to display data or write games inside of a terminal. There are a lot of modules and objects to help you build whatever you dream of inside of python."""
 
+import os 
+
 try:
     import keyboard
     import mouse
     import pytweening
-    import win32api
     import pygame
+
+    if os.name == "nt":
+      import win32api
 
 except:
     from os import system

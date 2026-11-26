@@ -1,6 +1,10 @@
-import win32gui
-import win32api
-import win32con
+import os
+
+if os.name == "nt":
+  import win32gui
+  import win32api
+  import win32con
+
 
 class TerminalWindow:
     def __init__(self):

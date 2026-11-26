@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from ..utils import *
 from .styles.roundedStyle import *
 
+from numpy import array
+
 class GAGSlider(GAGBasicUI):
     def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, min=0 ,max=1, text="button", style=RoundedStyle()):
         super().__init__()
@@ -74,3 +76,8 @@ class GAGSlider(GAGBasicUI):
             return f"{hexANSI(self.colorL)}{self.style.line*self.sliderPos}{hexANSI(self.colorKnob)}{self.style.knob}{hexANSI(self.colorR)}{self.style.line*(self.sliderWidth-self.sliderPos)} {hexANSI(self.colorText)}{self.text}"
         else:
             return f"{hexANSI(brightness(self.colorL, 0.5))}{self.style.line*self.sliderPos}{hexANSI(brightness(self.colorKnob, 0.5))}{self.style.knob}{hexANSI(brightness(self.colorR, 0.5))}{self.style.line*(self.sliderWidth-self.sliderPos)} {hexANSI(brightness(self.colorText, 0.5))}{self.text}"
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from ..utils import *
 from .styles.roundedStyle import *
 
+from numpy import array
+
 class GAGDropdown(GAGBasicUI):
     def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, options=["None"], text="", style=RoundedStyle()):
         super().__init__()
@@ -110,3 +112,8 @@ class GAGDropdown(GAGBasicUI):
 {hexANSI(brightness(self.color, 0.5))}{self.style.cornerNW}{self.style.edgeN*(self.width-5)}{self.style.teeN}{self.style.edgeN*3}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{str(self.selectedText)}{self.style.fill*(self.width-6-len(self.selectedText))}{self.style.edgeE} v {self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-5)}{self.style.teeS}{self.style.edgeS*3}{self.style.cornerSE}"""
+        
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

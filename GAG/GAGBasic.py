@@ -1,6 +1,9 @@
 # This is a basic object that has all the basic attributes apparent on all objects
 from ..GAGFunction import *
 from ..GAGInstance import GAGInstance as GAGI # Dont ask how importing this here imports it everywhere else
+from ..utils import *
+
+from numpy import array
 
 class GAGBasic:
     def __init__(self):
@@ -34,7 +37,7 @@ class GAGBasic:
             cam.draw(self)
 
     def draw(self, x1, y1, x2, y2):
-        pass
+        return array(parseObject(self))[y1:y2, x1:x2]
 
     def destroy(self):
         pass

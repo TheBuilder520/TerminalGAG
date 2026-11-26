@@ -25,8 +25,8 @@ FPSLimit = 60
 
 debug = False
 
-FPSCounter = True
+FPSCounter = False
 
-doSplash = False
+doSplash = True
 
 customErrors = False

@@ -46,7 +46,7 @@ class GAGCamera:
 
     def draw(self, drawObject):
         # Test to see if the object overlaps the camera, if not, do nothing since it would be a wast to render something you cant see.
-        if (drawObject.x <= self.viewX + self.width and drawObject.x + drawObject.width >= self.x and drawObject.y <= self.viewY + self.height and drawObject.y + drawObject.height >= self.viewY): 
+        if (drawObject.x <= self.viewX + self.width and drawObject.x + drawObject.width >= self.viewX and drawObject.y <= self.viewY + self.height and drawObject.y + drawObject.height >= self.viewY): 
 
             x1 = round(max(self.viewX, drawObject.x) - drawObject.x)
             y1 = round(max(self.viewY, drawObject.y) - drawObject.y)
@@ -54,7 +54,11 @@ class GAGCamera:
             x2 = round(min(self.viewX + self.width, drawObject.x + drawObject.width) - drawObject.x)
             y2 = round(min(self.viewY + self.height, drawObject.y + drawObject.height) - drawObject.y)
 
-            insertObjectC(drawObject.x - self.viewX, drawObject.y - self.viewY, drawObject.draw(x1, y1, x2, y2), self.screen.screen)
+            screenX = round(drawObject.x - self.viewX + x1)
+            screenY = round(drawObject.y - self.viewY + y1)
+
+            insertObjectC(screenX, screenY, drawObject.draw(x1, y1, x2, y2), self.screen.screen)
+
         
     def update(self, elapsed):
         """Ran every frame"""

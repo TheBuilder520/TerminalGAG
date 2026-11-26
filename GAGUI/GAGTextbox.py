@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from .styles.roundedStyle import *
 from ..utils import *
 
+from numpy import array
+
 class GAGTextbox(GAGBasicUI):
     def __init__(self, x=0, y=0, width=10, selectionX=0, selectionY=0, text="", descriptionText="", style=RoundedStyle()):
         super().__init__()
@@ -91,3 +93,8 @@ class GAGTextbox(GAGBasicUI):
 {self.style.cornerNW}{self.style.edgeN*(self.width-2)}{self.style.cornerNE}
 {self.style.edgeW}{self.style.fill}{self.__visText}{self.style.fill*(self.width-3-len(self.__visText))}{self.style.edgeE}
 {self.style.cornerSW}{self.style.edgeS*(self.width-2)}{self.style.cornerSE}"""
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

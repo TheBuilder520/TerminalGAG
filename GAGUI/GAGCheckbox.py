@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from ..utils import *
 from .styles.roundedStyle import *
 
+from numpy import array
+
 class GAGCheckBox(GAGBasicUI):
     def __init__(self, x=0, y=0, selectionX=0, selectionY=0, text="button", style=RoundedStyle()):
         super().__init__()
@@ -45,3 +47,8 @@ class GAGCheckBox(GAGBasicUI):
                 return f"""{hexANSI(brightness(self.checkColor, 0.5))}{self.style.check} {hexANSI(brightness(self.textColor, 0.5))}{self.text}"""
             else:
                 return f"""{hexANSI(brightness(self.uncheckColor, 0.5))}{self.style.uncheck} {hexANSI(brightness(self.textColor, 0.5))}{self.text}"""
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]

@@ -2,6 +2,8 @@ from .GAGBasicUI import *
 from .styles.roundedStyle import *
 from ..utils import *
 
+from numpy import array
+
 class GAGBox(GAGBasicUI):
     def __init__(self, x=0, y=0, width=20, height=10, selectionX=0, selectionY=0, tabs=["Box Tab"], style=RoundedStyle()):
         super().__init__()
@@ -148,3 +150,8 @@ class GAGBox(GAGBasicUI):
 {f'{self.style.edgeW}{self.style.fill*(self.width-2)}{self.style.edgeE}\n'*(self.height-4)}{self.style.cornerSW}{self.style.edgeS*(self.width-2)}{self.style.cornerSE}"""
 
             return top + mid + midMid + bottom
+
+    def draw(self, x1, y1, x2, y2):
+        super().draw(x1, y1, x2, y2)
+
+        return array(parseObject(self))[y1:y2, x1:x2]
