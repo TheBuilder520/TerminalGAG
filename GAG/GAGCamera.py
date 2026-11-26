@@ -42,11 +42,12 @@ class GAGCamera:
     def add(self, object:GAGBasic):
         """Adds an object to the state."""
         object.create()
+        object.cameras = []
         self.hud.append(object)
 
     def draw(self, drawObject):
         # Test to see if the object overlaps the camera, if not, do nothing since it would be a wast to render something you cant see.
-        if (drawObject.x <= self.viewX + self.width and drawObject.x + drawObject.width >= self.viewX and drawObject.y <= self.viewY + self.height and drawObject.y + drawObject.height >= self.viewY): 
+        if (drawObject.x <= self.viewX + self.width and drawObject.x + drawObject.width >= self.viewX and drawObject.y <= self.viewY + self.height and drawObject.y + drawObject.height >= self.viewY and drawObject.visible): 
 
             x1 = int(max(self.viewX, drawObject.x) - drawObject.x)
             y1 = int(max(self.viewY, drawObject.y) - drawObject.y)
@@ -56,8 +57,8 @@ class GAGCamera:
 
             screenX = round(drawObject.x - self.viewX + x1)
             screenY = round(drawObject.y - self.viewY + y1)
-
-            insertObjectC(screenX, screenY, drawObject.draw(x1, y1, x2, y2), self.screen.screen)
+    
+            insertObjectC(screenX, screenY, drawObject.draw(x1, y1, x2+1, y2+1), self.screen.screen)
 
         
     def update(self, elapsed):

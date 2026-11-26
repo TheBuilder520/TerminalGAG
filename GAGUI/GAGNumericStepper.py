@@ -33,19 +33,19 @@ class GAGNumericStepper(GAGBasicUI):
         self.object = str(self)
 
         if self.selected:
-            if self.state.GAGKeyboard.DOWN and self.__visValue > self.minNum:
+            if GAGI.GAGKeyboard.DOWN and self.__visValue > self.minNum:
                 self.__visValue -= self.increment
                 self.state.playSound("high")
-            if self.state.GAGKeyboard.UP and self.__visValue < self.maxNum:
+            if GAGI.GAGKeyboard.UP and self.__visValue < self.maxNum:
                 self.__visValue += self.increment
                 self.state.playSound("high")
-            if self.state.GAGKeyboard.BACKSPACE:
+            if GAGI.GAGKeyboard.BACKSPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.value = self.__startValue
                 self.__visValue = self.__startValue
                 self.state.playSound("back")
-            if self.state.GAGKeyboard.ENTER or self.state.GAGKeyboard.SPACE:
+            if GAGI.GAGKeyboard.ENTER or GAGI.GAGKeyboard.SPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.__checkNext = False
@@ -84,4 +84,4 @@ class GAGNumericStepper(GAGBasicUI):
     def draw(self, x1, y1, x2, y2):
         super().draw(x1, y1, x2, y2)
 
-        return array(parseObject(self))[y1:y2, x1:x2]
+        return array(parseObject(self))[y1:y2+1, x1:x2+1] # Dont question why +1 is needed here

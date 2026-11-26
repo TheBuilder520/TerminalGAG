@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from .config import *
 from .GAGScreen import *
 #from .GAG.GAGState import GAGState
@@ -26,6 +28,9 @@ class GAGInstanceClass:
 
     def resetCameras(self):
         from .GAG.GAGCamera import GAGCamera
+        for cam in self.cameras:
+            del cam
+            
         self.cameras = [GAGCamera(0, 0, self.width, self.height)]
         self.cameras[0].create()
     
@@ -41,8 +46,13 @@ class GAGInstanceClass:
                 self.gameLoop()
             except Exception as e:
                 self.error = e
-                self.currentState.running = False
-                self.currentState.destroy()
+                # self.currentState.running = False
+
+                from TerminalGAG.GAGErrorState import ErrorState
+
+                self.nextState = ErrorState(self.error, self.lastState, deepcopy(self.cameras[0].screen.screen))
+                self.nextState.create()
+                self.gameLoop()
 
         else:
             self.gameLoop()
@@ -55,6 +65,12 @@ class GAGInstanceClass:
             self.elapsed = time.time() - lastTime
             lastTime = time.time()
             self.update()
+            if self.nextState != None:
+                self.currentState.destroy()
+                self.lastState = self.currentState
+                self.currentState = self.nextState
+                self.nextState = None
+                self.resetCameras()
 
         self.inState = False
         self.currentState.destroy()

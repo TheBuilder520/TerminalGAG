@@ -23,10 +23,13 @@ startingCamera = True
 # Does not account for processing time.
 FPSLimit = 60
 
+useColor = True
+
 debug = False
 
 FPSCounter = False
 
 doSplash = True
 
+# DO NOT USE
 customErrors = False

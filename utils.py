@@ -120,11 +120,19 @@ def parseObject(object) -> list[list[str]]:
                 if char == "˳":
                     out[y].append("")
                 else:
-                    out[y].append(f"{activeColor}{char}{RESET}")
+                    if useColor:
+                        out[y].append(f"{activeColor}{char}{RESET}")
+                    else:
+                        out[y].append(f"{char}")
                 # print(f"{activeColor}{char}{RESET}")
 
     #if debug: print("parsed Object")
     #print(out)
+
+    longestLine = max(trueLen(line) for line in splitObject)
+    for row in out:
+        row.extend([""] * (longestLine - len(row)))
+
     return out
 
 def insertObject(object, parsedObject, plane):
@@ -203,10 +211,6 @@ def switchStates(newState):
     GAGI.currentState 
     if not GAGI.inState: # Check to see if a state is already active
         GAGI.currentState = newState
-        
-
-        if GAGI.lastState == None:
-            GAGI.lastState = deepcopy(newState)
 
         GAGI.startLoop()
 
@@ -217,6 +221,3 @@ def switchStates(newState):
         GAGI.nextState.create()
 
         GAGI.error = None
-
-    if GAGI.error != None:
-        switchStates(ErrorState(GAGI.error, GAGI.lastState, GAGI.cameras[0].screen.screen))

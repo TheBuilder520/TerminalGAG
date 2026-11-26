@@ -45,19 +45,23 @@ class GAGState:
 
     def destroy(self):
         """Closes the state and called when the state closes"""
-        global inState
         self.running = False
-        inState = False
+        GAGI.inState = False
+        for obj in self.objects:
+            obj.destroy()
+            del obj
 
     def add(self, object:GAGBasic):
         """Adds an object to the state."""
         object.create()
         self.objects.append(object)
+        return object
 
     def call(self, function:GAGFunction):
         """Adds an object to the state."""
         function.create()
         self.__runningFunctions.append(function)
+        return function
 
     def remove(self, object:GAGBasic):
         self.objects.remove(object)

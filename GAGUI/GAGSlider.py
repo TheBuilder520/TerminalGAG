@@ -41,18 +41,18 @@ class GAGSlider(GAGBasicUI):
             self.__lastValue = self.value
 
         if self.selected:
-            if self.state.GAGKeyboard.LEFT and self.sliderPos != 0:
+            if GAGI.GAGKeyboard.LEFT and self.sliderPos != 0:
                 self.sliderPos -= 1
                 self.state.playSound("high")
-            if self.state.GAGKeyboard.RIGHT and self.sliderPos != self.sliderWidth:
+            if GAGI.GAGKeyboard.RIGHT and self.sliderPos != self.sliderWidth:
                 self.sliderPos += 1
                 self.state.playSound("high")
-            if self.state.GAGKeyboard.BACKSPACE:
+            if GAGI.GAGKeyboard.BACKSPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.sliderPos = self.selectPosition
                 self.state.playSound("back")
-            if self.state.GAGKeyboard.ENTER or self.state.GAGKeyboard.SPACE:
+            if GAGI.GAGKeyboard.ENTER or GAGI.GAGKeyboard.SPACE:
                 self.selected = False
                 self.state.inMenu = True
                 self.__checkNext = False

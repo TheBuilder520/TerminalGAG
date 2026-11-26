@@ -33,11 +33,13 @@ class GAGGroup(GAGBasic):
         """Adds an object to the group."""
         object.create()
         self.objects.append(object)
+        return object
 
     def call(self, function:GAGFunction):
         """Adds a function to the group."""
         function.create()
         self.__runningFunctions.append(function)
+        return function
 
     def remove(self, object:GAGBasic):
         """Removes an object to the group."""

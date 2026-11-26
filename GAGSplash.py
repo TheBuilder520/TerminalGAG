@@ -43,6 +43,9 @@ class SplashScreen(GAGState):
             self.running = False
             if self.audioSupported: mixer.quit()
 
+        if GAGI.GAGKeyboard.P:
+            raise Exception("Error Test")
+
         if self.timer.isComplete():
             self.timerCounter += 1
             match(self.timerCounter):

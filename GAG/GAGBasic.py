@@ -37,7 +37,10 @@ class GAGBasic:
             cam.draw(self)
 
     def draw(self, x1, y1, x2, y2):
-        return array(parseObject(self))[y1:y2, x1:x2]
+        try:
+            return array(parseObject(self))[y1:y2, x1:x2]
+        except:
+            raise ValueError(f"A fatal error occurred. The 2d array was inhomogeneous. The array: {parseObject(self)} Object: {self.object}")
 
     def destroy(self):
         pass
@@ -46,3 +49,4 @@ class GAGBasic:
         """Adds an object to the state."""
         function.create()
         self.__runningFunctions.append(function)
+        return function

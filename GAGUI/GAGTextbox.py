@@ -30,8 +30,8 @@ class GAGTextbox(GAGBasicUI):
         self.object = str(self)
         #print(self.text)
 
-        if self.selected and self.state.GAGKeyboard.rawKey != None and self.state.GAGKeyboard.rawKey not in ["ctrl", "shift", "alt", "caps lock", "windows", "tab", "volume up", "volume down", "volume mute", "print screen", "scroll lock", "pause", "insert", "home", "page up", "page down", "end", "right", "up", "down", "left", "menu", "num lock", "play/pause media", "stop media", "previous track", "next track", "clear", "right ctrl", "right shift", "right alt", "left windows"]:
-            key = self.state.GAGKeyboard.rawKey
+        if self.selected and GAGI.GAGKeyboard.rawKey != None and GAGI.GAGKeyboard.rawKey not in ["ctrl", "shift", "alt", "caps lock", "windows", "tab", "volume up", "volume down", "volume mute", "print screen", "scroll lock", "pause", "insert", "home", "page up", "page down", "end", "right", "up", "down", "left", "menu", "num lock", "play/pause media", "stop media", "previous track", "next track", "clear", "right ctrl", "right shift", "right alt", "left windows"]:
+            key = GAGI.GAGKeyboard.rawKey
 
             if key == "enter":
                 self.selected = False

@@ -29,35 +29,35 @@ class GAGStateUI(GAGState):
                 item.hovering = False
 
         if self.inMenu:
-            if self.GAGKeyboard.UP:
+            if GAGI.GAGKeyboard.UP:
                 if (self.__selectionX, self.__selectionY-1) in self.__buttonPositions and self.getItem(self.__selectionX, self.__selectionY-1):
                     self.__selectionY -= 1
                     self.playSound("low")
                 else:
                     self.playSound("denied")
 
-            if self.GAGKeyboard.DOWN:
+            if GAGI.GAGKeyboard.DOWN:
                 if (self.__selectionX, self.__selectionY+1) in self.__buttonPositions and self.getItem(self.__selectionX, self.__selectionY+1):
                     self.__selectionY += 1
                     self.playSound("low")
                 else:
                     self.playSound("denied")
 
-            if self.GAGKeyboard.LEFT:
+            if GAGI.GAGKeyboard.LEFT:
                 if (self.__selectionX-1, self.__selectionY) in self.__buttonPositions and self.getItem(self.__selectionX-1, self.__selectionY):
                     self.__selectionX -= 1
                     self.playSound("low")
                 else:
                     self.playSound("denied")
 
-            if self.GAGKeyboard.RIGHT:
+            if GAGI.GAGKeyboard.RIGHT:
                 if (self.__selectionX+1, self.__selectionY) in self.__buttonPositions and self.getItem(self.__selectionX+1, self.__selectionY):
                     self.__selectionX += 1
                     self.playSound("low")
                 else:
                     self.playSound("denied")
 
-            if self.GAGKeyboard.ENTER or self.GAGKeyboard.SPACE:
+            if GAGI.GAGKeyboard.ENTER or self.GAGKeyboard.SPACE:
                 for item in self.__selectableItems:
                     if item.selectionX == self.__selectionX and item.selectionY == self.__selectionY and item.visible:
                         item.onSelect()
